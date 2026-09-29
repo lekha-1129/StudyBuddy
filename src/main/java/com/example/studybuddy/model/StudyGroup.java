@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "study_groups")
 public class StudyGroup {
@@ -105,8 +107,9 @@ public class StudyGroup {
             return student;
         }
 
-        public StudyGroup getStudyGroup() {
-            return studyGroup;
-        }
+        @JsonIgnore
+public StudyGroup getStudyGroup() {
+    return studyGroup;
+}
     }
 }

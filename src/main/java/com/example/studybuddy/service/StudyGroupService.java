@@ -4,6 +4,7 @@ import com.example.studybuddy.model.StudyGroup;
 
 import java.util.List;
 
+
 public interface StudyGroupService {
 
     StudyGroup createGroup(
@@ -31,4 +32,5 @@ public interface StudyGroupService {
             Long creatorId,
             Long memberId
     );
+
 }

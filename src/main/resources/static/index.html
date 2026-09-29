@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyBuddy | Study Group Manager</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+
+        <div>
+            <h1>StudyBuddy</h1>
+            <p>Study Group Manager</p>
+        </div>
+    </div>
+
+    <button class="refresh-btn" onclick="refreshAll()">
+        ↻ Refresh
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <!-- ===================== -->
+    <!-- STUDENT SECTION -->
+    <!-- ===================== -->
+     
+
+    <section class="section">
+
+        <div class="section-title">
+            <div>
+                <span class="tag">STUDENTS</span>
+                <h2>Student Management</h2>
+                <p>Create students and use their IDs for group operations.</p>
+            </div>
+        </div>
+
+
+        <div class="grid two">
+
+            <!-- CREATE STUDENT -->
+
+            <div class="card">
+
+                <h3>➕ Create Student</h3>
+
+                <form id="studentForm">
+
+                    <label>Name</label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter student name"
+                        required
+                    >
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="studentEmail"
+                        placeholder="student@gmail.com"
+                        required
+                    >
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        id="studentPassword"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                    <button class="primary" type="submit">
+                        Create Student
+                    </button>
+
+                </form>
+
+                <div id="studentMessage" class="message"></div>
+
+            </div>
+
+
+            <!-- STUDENT LIST -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h3>👤 Students</h3>
+
+                    <button
+                        class="small-btn"
+                        onclick="loadStudents()"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+                <div id="studentsContainer">
+
+                    <p class="muted">
+                        Loading students...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <section class="card subject-card">
+
+
+<div class="section-header">
+    <div>
+        <span class="section-label"></span>
+        <h2>Add a Subject</h2>
+        <p>Create a subject that students can use to form study groups.</p>
+    </div>
+</div>
+
+<form id="subjectForm" class="subject-form">
+
+    <div class="form-group">
+        <label for="subjectName">Subject Name</label>
+
+        <input
+            type="text"
+            id="subjectName"
+            name="subjectName"
+            placeholder="e.g. Data Structures"
+            required
+        />
+    </div>
+
+    <button type="submit" class="primary-btn">
+        <span>＋</span>
+        Add Subject
+    </button>
+
+</form>
+
+<div
+    id="subjectMessage"
+    class="message"
+></div>
+
+<div class="subject-list-section">
+
+    <div class="subject-list-header">
+        <h3>Available Subjects</h3>
+        <span id="subjectCount">0 subjects</span>
+    </div>
+
+    <div
+        id="subjectsContainer"
+        class="subjects-container"
+    ></div>
+
+</div>
+
+
+</section>
+
+
+
+    <!-- ===================== -->
+    <!-- GROUP CREATION -->
+    <!-- ===================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div>
+
+                <span class="tag">STUDY CIRCLES</span>
+
+                <h2>Create a Study Group</h2>
+
+                <p>
+                    Select a subject, creator and maximum number of members.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card create-group-card">
+
+            <form id="groupForm">
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label>Subject ID</label>
+
+                        <input
+    type="text"
+    id="groupSubjectName"
+    placeholder="Subject name (e.g. Data Structures)"
+    required
+/>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>Creator Student ID</label>
+
+                        <input
+                            type="number"
+                            id="groupCreatorId"
+                            placeholder="Example: 11"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>Maximum Members</label>
+
+                        <input
+                            type="number"
+                            id="groupMaxMembers"
+                            min="1"
+                            value="5"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="primary large"
+                    type="submit"
+                >
+                    ✦ Create Study Group
+                </button>
+
+            </form>
+
+
+            <div id="groupMessage" class="message"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================== -->
+    <!-- GROUP SEARCH -->
+    <!-- ===================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div>
+
+                <span class="tag">DISCOVER</span>
+
+                <h2>Find Study Groups</h2>
+
+                <p>
+                    Search groups using a subject ID.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="search-row">
+
+               <input
+    type="text"
+    id="searchSubjectName"
+    placeholder="Subject name (e.g. Data Structures)"
+    required
+/>
+
+                <button
+                    class="primary"
+                    onclick="loadGroups()"
+                >
+                    🔎 Find Groups
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="groupsContainer"
+            class="groups-container"
+        >
+
+            <div class="empty">
+
+                <div class="empty-icon">✦</div>
+
+                <h3>No groups loaded</h3>
+
+                <p>
+                    Enter a subject ID and click Find Groups.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================== -->
+    <!-- GROUP OPERATIONS -->
+    <!-- ===================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div>
+
+                <span class="tag">OPERATIONS</span>
+
+                <h2>Manage Group Members</h2>
+
+                <p>
+                    Perform the same operations you tested in Postman.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid two">
+
+
+            <!-- JOIN -->
+
+            <div class="card operation-card">
+
+                <div class="operation-icon green">
+                    🤝
+                </div>
+
+                <h3>Join Group</h3>
+
+                <p>
+                    Add a student to a study group.
+                </p>
+
+
+                <label>Group ID</label>
+
+                <input
+                    type="number"
+                    id="joinGroupId"
+                    placeholder="Example: 4"
+                >
+
+
+                <label>Student ID</label>
+
+                <input
+                    type="number"
+                    id="joinStudentId"
+                    placeholder="Example: 13"
+                >
+
+
+                <button
+                    class="primary"
+                    onclick="joinGroup()"
+                >
+                    Join Group
+                </button>
+
+
+                <div id="joinMessage" class="message"></div>
+
+            </div>
+
+
+
+            <!-- LEAVE -->
+
+            <div class="card operation-card">
+
+                <div class="operation-icon orange">
+                    🚪
+                </div>
+
+                <h3>Leave Group</h3>
+
+                <p>
+                    Remove yourself from a study group.
+                </p>
+
+
+                <label>Group ID</label>
+
+                <input
+                    type="number"
+                    id="leaveGroupId"
+                    placeholder="Example: 4"
+                >
+
+
+                <label>Student ID</label>
+
+                <input
+                    type="number"
+                    id="leaveStudentId"
+                    placeholder="Example: 13"
+                >
+
+
+                <button
+                    class="secondary"
+                    onclick="leaveGroup()"
+                >
+                    Leave Group
+                </button>
+
+
+                <div id="leaveMessage" class="message"></div>
+
+            </div>
+
+
+
+            <!-- REMOVE MEMBER -->
+
+            <div class="card operation-card full">
+
+                <div class="operation-icon red">
+                    ❌
+                </div>
+
+                <h3>Remove Member</h3>
+
+                <p>
+                    Only the creator of the group can remove another member.
+                </p>
+
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label>Group ID</label>
+
+                        <input
+                            type="number"
+                            id="removeGroupId"
+                            placeholder="Example: 4"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>Member ID to Remove</label>
+
+                        <input
+                            type="number"
+                            id="removeMemberId"
+                            placeholder="Example: 13"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <label>Creator ID</label>
+
+                        <input
+                            type="number"
+                            id="removeCreatorId"
+                            placeholder="Example: 11"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="danger"
+                    onclick="removeMember()"
+                >
+                    Remove Member
+                </button>
+
+
+                <div id="removeMessage" class="message"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================== -->
+    <!-- API STATUS -->
+    <!-- ===================== -->
+
+    <section class="status-section">
+
+        <div class="status-dot"></div>
+
+        <div>
+
+            <strong>StudyBuddy API</strong>
+
+            <span>
+                Connected to http://localhost:8080
+            </span>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    StudyBuddy • Campus Study Network
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -33,4 +33,14 @@ public class SubjectController {
     public List<Subject> getSubjects() {
         return subjectRepository.findAll();
     }
+    @GetMapping("/name/{name}")
+public ResponseEntity<Subject> getSubjectByName(
+        @PathVariable String name) {
+
+    Subject subject = subjectRepository.findByName(name)
+            .orElseThrow(() ->
+                    new RuntimeException("Subject not found"));
+
+    return ResponseEntity.ok(subject);
+}
 }
